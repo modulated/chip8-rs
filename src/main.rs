@@ -15,12 +15,6 @@ async fn main() {
         Ok(_) => vm.run().await,
         Err(e) => panic!("Could not load ROM: {e}"),
     }
-
-    // let rom = include_bytes!("../roms/glitchGhost.ch8");
-
-    // let mut vm = VM::new();
-    // vm.load_bytes(rom, 0x200);
-    // vm.run().await;
 }
 
 fn conf() -> Conf {
