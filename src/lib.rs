@@ -10,6 +10,7 @@ use std::sync::OnceLock;
 pub use vm::OpCode;
 pub use vm::VM;
 
+pub static STACK_SIZE: i32 = 16;
 pub static SCREEN_WIDTH: u32 = 64;
 pub static SCREEN_HEIGHT: u32 = 32;
 pub static WINDOW_WIDTH: u32 = 1024;
