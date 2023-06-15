@@ -13,9 +13,10 @@ impl super::VM {
 
     #[allow(clippy::missing_panics_doc)]
     #[allow(clippy::cast_sign_loss)]
+    #[allow(clippy::cast_possible_wrap)]
     pub fn push(&mut self, value: u16) {
         assert!(
-            (self.stack_pointer as usize) < STACK_SIZE,
+            self.stack_pointer < STACK_SIZE as i8,
             "Stack full, attempted to PUSH"
         );
 

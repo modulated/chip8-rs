@@ -175,8 +175,13 @@ impl VM {
             for j in 0..8 {
                 let x = (x + j) % SCREEN_WIDTH as u8;
                 let y = (y + i) % SCREEN_HEIGHT as u8;
-                if 0b1000_0000 >> j & data != 0 && self.set_pixel(x, y) {
-                    self.set_carry_flag(1);
+                if 0b1000_0000 >> j & data != 0 {
+                    let r = self.set_pixel(x, y);
+                    if r {
+                        self.set_carry_flag(1);
+                    } else {
+                        self.set_carry_flag(0);
+                    }
                 }
             }
         }
