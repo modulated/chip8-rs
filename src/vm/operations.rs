@@ -252,7 +252,7 @@ impl VM {
     // LDSPR - FX29
     pub fn load_sprite(&mut self, reg: u8) {
         let val = self.reg[reg as usize];
-        self.i = self.memory[val as usize * 5] as u16;
+        self.i = val as u16 * 5;
     }
 
     // STBCD - FX33

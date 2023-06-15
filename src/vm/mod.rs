@@ -146,10 +146,19 @@ mod test {
         let mut vm = VM::new();
         let buf = vec![0x00, 0xEE, 0x00, 0xE0, 0x10, 0x20];
         vm.load_bytes(&buf, 0x200);
-        vm.dump_memory();
         assert_eq!(vm.memory[0x200], 0x00);
         assert_eq!(vm.memory[0x201], 0xEE);
     }
+
+	#[test]
+    fn test_load_font() {
+		let mut vm = VM::new();
+       
+        vm.load_bytes(&super::FONTSET, 0x0);
+        assert_eq!(vm.memory[0x00], 0xF0);
+        assert_eq!(vm.memory[0x01], 0x90);		
+        assert_eq!(vm.memory[5 * 4], 0x90);
+	}
 }
 
 static FONTSET: [u8; 80] = [
