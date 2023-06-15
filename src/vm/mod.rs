@@ -16,12 +16,13 @@ pub struct VM {
     i: u16,
     reg: [u8; 16],
     stack: [u16; 16],
-    stack_pointer: u8,
+    stack_pointer: i8,
     key: [bool; 16],
     screen: [bool; 64 * 32],
     delay_timer: u8,
     sound_timer: u8,
     sound_playing: bool,
+	key_pressed: Option<u8>	
 }
 
 impl VM {
@@ -70,23 +71,22 @@ impl VM {
         let mut start_timestep = std::time::Instant::now();
 
         loop {
-            // should run at 500 MHz
-            let end_tick = std::time::Instant::now();
+			let end_tick = std::time::Instant::now();
             let dif_tick = (end_tick - start_tick).as_micros();
 
             if dif_tick > CPU_TICK_NANOS {
                 // should run 500 MHz
-                self.get_input();
                 let instruction = self.get_instruction(); // get instruction and increments IP by 2
                 let op = OpCode::from_bytes(instruction);
                 self.execute_op(&op);
                 start_tick = std::time::Instant::now();
             }
-
+			
             let end_timestep = std::time::Instant::now();
             let dif_timestep = (end_timestep - start_timestep).as_micros();
             if dif_timestep > UPDATE_TIMESTEP_MICROS {
-                // should run at 60 Hz
+				// should run at 60 Hz
+				self.get_input();
                 self.draw_screen();
                 self.run_timers();
                 let fps = get_fps();
@@ -124,12 +124,13 @@ impl Default for VM {
             i: 0,
             reg: [0; 16],
             stack: [0; 16],
-            stack_pointer: 0,
+            stack_pointer: -1,
             key: [false; 16],
             screen: [false; 64 * 32],
             delay_timer: 0,
             sound_timer: 0,
             sound_playing: false,
+			key_pressed: None
         };
         vm.load_bytes(&FONTSET, 0);
         vm

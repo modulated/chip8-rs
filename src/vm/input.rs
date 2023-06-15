@@ -22,7 +22,7 @@ static KEYMAP: [KeyCode; 16] = [
 impl super::VM {
     pub fn get_input(&mut self) {
         for (i, k) in KEYMAP.iter().enumerate() {
-            if is_key_down(*k) {
+            if is_key_pressed(*k) {
                 self.key[i] = true;
                 // println!("PRESSED {i}");
             } else {
