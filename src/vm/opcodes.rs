@@ -30,7 +30,7 @@ pub enum OpCode {
     LDT(u8),                        // FX07
     KPR(u8),                        // FX0A
     SETDT(u8),                      // FX15
-	SETST(u8),						// FX18
+    SETST(u8),                      // FX18
     ADDI(u8),                       // FX1E
     LDSPR(u8),                      // FX29
     STBCD(u8),                      // FX33
@@ -44,8 +44,8 @@ impl OpCode {
     pub fn from_bytes(bytes: (u8, u8)) -> Self {
         use OpCode::{
             Unknown, ADD, ADDI, CALL, CLS, DRW, JMP, JP, KPR, LD, LDSPR, LDT, RADD, RAND, READ,
-            RET, RLD, RND, ROR, RSE, RSHL, RSHR, RSNE, RSUB, RSUBN, RXOR, SE, SET, SETDT, SETST, SKNP,
-            SKP, SNE, STBCD, STORE,
+            RET, RLD, RND, ROR, RSE, RSHL, RSHR, RSNE, RSUB, RSUBN, RXOR, SE, SET, SETDT, SETST,
+            SKNP, SKP, SNE, STBCD, STORE,
         };
         match (bytes.0, bytes.1) {
             (0x00, 0xE0) => CLS,
@@ -117,7 +117,7 @@ impl OpCode {
             (0xF0..=0xFF, 0x07) => LDT(bytes.0 ^ 0xF0),
             (0xF0..=0xFF, 0x0A) => KPR(bytes.0 ^ 0xF0),
             (0xF0..=0xFF, 0x15) => SETDT(bytes.0 ^ 0xF0),
-			(0xF0..=0xFF, 0x18) => SETST(bytes.0 ^ 0xF0),
+            (0xF0..=0xFF, 0x18) => SETST(bytes.0 ^ 0xF0),
             (0xF0..=0xFF, 0x1E) => ADDI(bytes.0 ^ 0xF0),
             (0xF0..=0xFF, 0x29) => LDSPR(bytes.0 ^ 0xF0),
             (0xF0..=0xFF, 0x33) => STBCD(bytes.0 ^ 0xF0),
@@ -134,8 +134,8 @@ impl std::fmt::Display for OpCode {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         use OpCode::{
             Unknown, ADD, ADDI, CALL, CLS, DRW, JMP, JP, KPR, LD, LDSPR, LDT, RADD, RAND, READ,
-            RET, RLD, RND, ROR, RSE, RSHL, RSHR, RSNE, RSUB, RSUBN, RXOR, SE, SET, SETDT, SETST, SKNP,
-            SKP, SNE, STBCD, STORE,
+            RET, RLD, RND, ROR, RSE, RSHL, RSHR, RSNE, RSUB, RSUBN, RXOR, SE, SET, SETDT, SETST,
+            SKNP, SKP, SNE, STBCD, STORE,
         };
         match self {
             CLS => Ok(write!(f, "CLS - {:#06X}", 0x00E0)?),

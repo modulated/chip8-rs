@@ -5,8 +5,8 @@ impl VM {
     pub fn execute_op(&mut self, op: &OpCode) {
         use OpCode::{
             Unknown, ADD, ADDI, CALL, CLS, DRW, JMP, JP, KPR, LD, LDSPR, LDT, RADD, RAND, READ,
-            RET, RLD, RND, ROR, RSE, RSHL, RSHR, RSNE, RSUB, RSUBN, RXOR, SE, SET, SETDT, SETST, SKNP,
-            SKP, SNE, STBCD, STORE,
+            RET, RLD, RND, ROR, RSE, RSHL, RSHR, RSNE, RSUB, RSUBN, RXOR, SE, SET, SETDT, SETST,
+            SKNP, SKP, SNE, STBCD, STORE,
         };
 
         // let start = std::time::Instant::now();
@@ -40,7 +40,7 @@ impl VM {
             LDT(x) => self.load_delay_timer(*x),
             KPR(x) => self.await_keypress(*x),
             SETDT(x) => self.set_delay_timer(*x),
-			SETST(x) => self.set_sound_timer(*x),
+            SETST(x) => self.set_sound_timer(*x),
             ADDI(x) => self.add_i(*x),
             LDSPR(x) => self.load_sprite(*x),
             STBCD(x) => self.store_bcd(*x),

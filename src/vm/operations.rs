@@ -220,9 +220,9 @@ impl VM {
     }
 
     // SETST - FX18
-	pub fn set_sound_timer(&mut self, reg: u8) {
-		self.sound_timer = self.reg[reg as usize];
-	}
+    pub fn set_sound_timer(&mut self, reg: u8) {
+        self.sound_timer = self.reg[reg as usize];
+    }
 
     // ADDI - FX1E
     pub fn add_i(&mut self, reg: u8) {
