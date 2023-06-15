@@ -15,14 +15,14 @@ pub struct VM {
     program_counter: u16,
     i: u16,
     reg: [u8; 16],
-    stack: [u16; 16],
+    stack: [u16; crate::STACK_SIZE],
     stack_pointer: i8,
     key: [bool; 16],
     screen: [bool; 64 * 32],
     delay_timer: u8,
     sound_timer: u8,
     sound_playing: bool,
-	key_pressed: Option<u8>	
+    key_pressed: Option<u8>,
 }
 
 impl VM {
@@ -71,7 +71,7 @@ impl VM {
         let mut start_timestep = std::time::Instant::now();
 
         loop {
-			let end_tick = std::time::Instant::now();
+            let end_tick = std::time::Instant::now();
             let dif_tick = (end_tick - start_tick).as_micros();
 
             if dif_tick > CPU_TICK_NANOS {
@@ -81,12 +81,12 @@ impl VM {
                 self.execute_op(&op);
                 start_tick = std::time::Instant::now();
             }
-			
+
             let end_timestep = std::time::Instant::now();
             let dif_timestep = (end_timestep - start_timestep).as_micros();
             if dif_timestep > UPDATE_TIMESTEP_MICROS {
-				// should run at 60 Hz
-				self.get_input();
+                // should run at 60 Hz
+                self.get_input();
                 self.draw_screen();
                 self.run_timers();
                 let fps = get_fps();
@@ -130,7 +130,7 @@ impl Default for VM {
             delay_timer: 0,
             sound_timer: 0,
             sound_playing: false,
-			key_pressed: None
+            key_pressed: None,
         };
         vm.load_bytes(&FONTSET, 0);
         vm

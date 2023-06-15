@@ -3,7 +3,7 @@ use crate::STACK_SIZE;
 impl super::VM {
     #[allow(clippy::missing_panics_doc)]
     #[allow(clippy::cast_sign_loss)]
-    
+
     pub fn pop(&mut self) -> u16 {
         assert!(self.stack_pointer > -1, "Stack empty, attempted top POP");
 
@@ -14,7 +14,10 @@ impl super::VM {
     #[allow(clippy::missing_panics_doc)]
     #[allow(clippy::cast_sign_loss)]
     pub fn push(&mut self, value: u16) {
-        assert!(self.stack_pointer < STACK_SIZE as i8, "Stack full, attempted to PUSH");
+        assert!(
+            (self.stack_pointer as usize) < STACK_SIZE,
+            "Stack full, attempted to PUSH"
+        );
 
         self.stack_pointer += 1;
         self.stack[self.stack_pointer as usize] = value;
@@ -27,7 +30,7 @@ mod test {
     #[test]
     fn test_max_stack() {
         let mut vm = VM::new();
-        
+
         for x in 0..16 {
             vm.push(x);
         }

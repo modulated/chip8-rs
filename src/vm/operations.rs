@@ -207,25 +207,26 @@ impl VM {
     pub fn await_keypress(&mut self, reg: u8) {
         // TODO - consider refactoring to state machine
 
-		match self.key_pressed {
-			None => { // WAITING KEY PRESS
-				for (i, b) in self.key.iter().enumerate() {
-					if *b {
-						self.reg[reg as usize] = i as u8;
-						self.key_pressed = Some(i as u8);						
-					}
-				}
-				self.program_counter -= 2;
-			},
-			Some(k) => { // KEY DOWN, WAITING KEY UP
-				if self.key[k as usize] {
-					self.program_counter -= 2;
-				} else {
-					self.key_pressed = None;
-				}
-			}		
-		}
-        
+        match self.key_pressed {
+            None => {
+                // WAITING KEY PRESS
+                for (i, b) in self.key.iter().enumerate() {
+                    if *b {
+                        self.reg[reg as usize] = i as u8;
+                        self.key_pressed = Some(i as u8);
+                    }
+                }
+                self.program_counter -= 2;
+            }
+            Some(k) => {
+                // KEY DOWN, WAITING KEY UP
+                if self.key[k as usize] {
+                    self.program_counter -= 2;
+                } else {
+                    self.key_pressed = None;
+                }
+            }
+        }
     }
 
     // SETDT - FX15
