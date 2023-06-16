@@ -38,7 +38,7 @@ impl VM {
         f.read_to_end(&mut buf)?;
 
         self.load_bytes(&buf, 0x200);
-
+		self.dump_memory();
         Ok(())
     }
 
@@ -99,11 +99,14 @@ impl VM {
 
     pub fn dump_memory(&self) {
         for (i, b) in self.memory.iter().enumerate() {
-            if i % 8 == 0 {
+            if i % 32 == 0 {
                 println!();
-                print!("{i}: ");
+                print!("{i:#06X}: ");
             }
-            print!("{b:#04X} ");
+			if i % 8 == 0 {
+				print!("  ");
+			}
+            print!("{b:02X} ");
         }
     }
 
